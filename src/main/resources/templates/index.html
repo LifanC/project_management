@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script	src="js/jquery.min.js"></script>
+<script	src="js/angular.min.js"></script>
+<script src="js/mainjs.js"></script>
+<link href="css/bootstrap.min.css" type="text/css"  rel="stylesheet">
+<title>Index</title>
+</head>
+<body class="mx-auto" style="width: 1000px; margin-top:100px; padding:20px">
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<div>
+			<h3>{{thedaytime}}</h3>
+			<h1>倉庫管理</h1>
+		</div>
+		<div>
+			<table class="table">
+				<tr>
+					<th>產品 ID</th>
+					<th>產品編號</th>
+					<th>產品名稱</th>
+					<th>總數量</th>
+					<th>產品價錢</th>
+					<th>總金額</th>
+					<th>新增日期</th>
+					<th>修改 / 刪除 功能</th>
+				</tr>
+				<tr ng-repeat="x in names">
+					<td>{{x.id}}</td>
+					<td>{{x.number}}</td>
+					<td>{{x.name}}</td>
+					<td>{{x.count}}</td>
+					<td>{{x.price}}</td>
+					<td>{{x.totalprice}}</td>
+					<td>{{x.daytime}}</td>
+					<td>
+						<button class="btn btn-primary" ng-click="edit(x)">編輯</button>
+						<button class="btn btn-primary" ng-click="del(x)">刪除</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<form>
+		
+			<table class="table table-bordered">
+			<thead class="table-primary">
+				<tr>
+						<th>
+							<h3><b>出售產品</b></h3>
+						</th>
+						<th>
+							<h3><b>新增 / 修改 產品資料</b></h3>
+						</th>
+					</tr>
+			</thead>
+				<tr>
+					<td>
+						<table class="table table-borderless">
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="setid" type="text" placeholder="產品ID"
+											size="10%">
+										<label>產品ID</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 輸入產品ID </span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="setcount" type="text" placeholder="出售數量"
+											size="10%">
+										<label>出售數量</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 出售的產品數量 </span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p>
+										<button class="btn btn-primary" ng-click="myClickset()"
+											type="button">出售產品</button>
+									</p>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table class="table table-borderless">
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="number" type="text" ng-model="form.number"
+											placeholder="產品編號" size="10%">
+										<label>產品編號</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 新增 </span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="name" type="text" ng-model="form.name"
+											placeholder="產品名稱" size="10%" />
+										<label>產品名稱</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 新增、修改 </span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="count" type="text" ng-model="form.count"
+											placeholder="產品數量" size="10%" />
+										<label>產品數量</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 新增、修改 </span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+										<input class="form-control" id="price" type="text" ng-model="form.price"
+											placeholder="產品數量" size="10%" />
+										<label>產品價錢</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 新增、修改 </span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p>
+										<button class="btn btn-primary" ng-click="btn()" type="button">點擊送出</button>
+									</p>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			
+			</table>
+		</form>
+	</div>
+</body>
+</html>
