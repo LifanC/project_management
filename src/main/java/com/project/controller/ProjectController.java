@@ -62,18 +62,18 @@ public class ProjectController {
 	}
 
 	@PostMapping("set")
-	public @ResponseBody ProjectListVO set(Project Project) throws SQLException {
-		List<Project> datafirst = angularRepository.queryById(Project.getId());
+	public @ResponseBody ProjectListVO set(Project project) throws SQLException {
+		List<Project> datafirst = angularRepository.queryByNumber(project.getNumber());
 		ProjectCount c = new ProjectCount(0);
-		c.setCount(Project.getCount());
+		c.setCount(project.getCount());
 		Integer f = c.getCount();
 		datafirst.forEach(e -> {
 			Integer b = e.getCount();
 			Integer result = b - f;
-			Project.setCount(result);
+			project.setCount(result);
 			AngularImp set = new AngularImp();
 			try {
-				set.updateCount(Project);
+				set.updateCount(project);
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -84,18 +84,18 @@ public class ProjectController {
 	}
 	
 	@PostMapping("enter")
-	public @ResponseBody ProjectListVO enter(Project Project) throws SQLException {
-		List<Project> datafirst = angularRepository.queryById(Project.getId());
+	public @ResponseBody ProjectListVO enter(Project project) throws SQLException {
+		List<Project> datafirst = angularRepository.queryByNumber(project.getNumber());
 		ProjectCount c = new ProjectCount(0);
-		c.setCount(Project.getCount());
+		c.setCount(project.getCount());
 		Integer f = c.getCount();
 		datafirst.forEach(e -> {
 			Integer b = e.getCount();
 			Integer result = b + f;
-			Project.setCount(result);
+			project.setCount(result);
 			AngularImp set = new AngularImp();
 			try {
-				set.updateCount(Project);
+				set.updateCount(project);
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}

@@ -9,6 +9,8 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
+	@Column(name = "types")
+	private String types;
 	@Column(name = "number")
 	private String number;
 	@Column(name = "name")
@@ -19,15 +21,19 @@ public class Project {
 	private Integer price;
 	@Column(name = "day")
 	private String day;
+	@Column(name = "text")
+	private String text;
 	@Column(name = "daytime")
 	private String daytime;
 	public Project() {}
-	public Project(String number, String name, Integer count, Integer price, String day, String daytime) {
+	public Project(String types, String number, String name, Integer count, Integer price, String day, String text, String daytime) {
+		this.types = types;
 		this.number = number;
 		this.name = name;
 		this.count = count;
 		this.price = price;
 		this.day = day;
+		this.text = text;
 		this.daytime = daytime;
 	}
 	public Integer getId() {
@@ -35,6 +41,12 @@ public class Project {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getTypes() {
+		return types;
+	}
+	public void setTypes(String types) {
+		this.types = types;
 	}
 	public String getNumber() {
 		return number;
@@ -69,6 +81,12 @@ public class Project {
 	public void setDay(String day) {
 		this.day = day;
 	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	public String getDaytime() {
 		return daytime;
 	}
@@ -77,9 +95,12 @@ public class Project {
 	}
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", number=" + number + ", name=" + name + ", count=" + count + ", price=" + price
-				+ ", day=" + day + ", daytime=" + daytime + "]";
+		return "Project [id=" + id + ", types=" + types + ", number=" + number + ", name=" + name + ", count=" + count
+				+ ", price=" + price + ", day=" + day + ", text=" + text + ", daytime=" + daytime + "]";
 	}
+	
+	
+
 	
 
 }

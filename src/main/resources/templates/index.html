@@ -5,36 +5,46 @@
 <script	src="js/angular.min.js"></script>
 <script src="js/mainjs.js"></script>
 <link href="css/bootstrap.min.css" type="text/css"  rel="stylesheet">
-<link href="css/index.css" type="text/css"  rel="stylesheet">
 <title>Index</title>
 </head>
-<body class="mx-auto" style="width: 1000px; margin-top:100px; padding:20px">
+<body class="mx-auto" style="width: 1500px; margin-top:20px; padding:20px">
 	<div ng-app="myApp" ng-controller="myCtrl">
 		<div>
 			<h3>{{thedaytime}}</h3>
 			<h1>倉庫管理</h1>
 		</div>
+		
+		<div class="alert alert-light" role="alert">
+  			可以按↓ (排順序&emsp;從小到大)<br>
+  			產品編號&emsp;↓&emsp;產品名稱&emsp;↓&emsp;總數量&emsp;↓&emsp;產品價錢&emsp;↓&emsp;總金額&emsp;↓&emsp;日期
+		</div>
 		<div>
-			<table class="table">
+			<table class="table table-bordered">
+			<thead class="table-light">
 				<tr>
-					<th>產品 ID</th>
-					<th>產品編號</th>
-					<th>產品名稱</th>
-					<th>總數量</th>
-					<th>產品價錢</th>
-					<th>總金額</th>
-					<th>日期</th>
+					<th ng-click="orderByMe('$index+1')">排序編號</th>
+					<th ng-click="orderByMe('types')">產品類型</th>
+					<th ng-click="orderByMe('number')">產品編號</th>
+					<th ng-click="orderByMe('name')">產品名稱</th>
+					<th ng-click="orderByMe('count')">總數量</th>
+					<th ng-click="orderByMe('price')">產品價錢</th>
+					<th ng-click="orderByMe('totalprice')">總金額</th>
+					<th ng-click="orderByMe('day')">日期</th>
+					<th>規格</th>
 					<th>修改 / 刪除 功能</th>
 					<th>使用日期</th>
 				</tr>
-				<tr ng-repeat="x in names">
-					<td>{{x.id}}</td>
+			</thead>
+				<tr ng-repeat="x in names|orderBy:myOrderBy">
+					<td>{{$index+1}}</td>
+					<td>{{x.types}}</td>
 					<td>{{x.number}}</td>
 					<td>{{x.name}}</td>
 					<td>{{x.count}}</td>
 					<td>{{x.price}}</td>
 					<td>{{x.totalprice}}</td>
 					<td>{{x.day}}</td>
+					<td style="width:250px">{{x.text}}</td>
 					<td>
 						<button class="btn btn-primary" ng-click="edit(x)">修改</button>
 						<button class="btn btn-primary" ng-click="del(x)">刪除</button>
@@ -43,6 +53,8 @@
 				</tr>
 			</table>
 		</div>
+		
+		
 		<form>
 		
 			<table class="table table-bordered">
@@ -62,19 +74,20 @@
 							<tr>
 								<td>
 									<div class="form-floating mb-3">
-										<input class="form-control" id="setid" type="text" placeholder="產品ID"
+										<input class="form-control" id="setnum" type="text" placeholder="產品編號"
 											size="10%">
-										<label>產品ID</label>
+										<label>產品編號</label>
 									</div>
 								</td>
 								<td>
-									<span class="form-text"> 輸入出售產品ID </span>
+									<span class="form-text"> 輸入出售產品編號 </span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="form-floating mb-3">
-										<input class="form-control" id="setcount" type="text" placeholder="出售數量" size="10%">
+										<input class="form-control" id="setcount" type="text" placeholder="出售數量"
+											size="10%">
 										<label>出售數量</label>
 									</div>
 								</td>
@@ -88,17 +101,16 @@
 										<button class="btn btn-primary" ng-click="myClickset()" type="button">出售產品</button>
 									</p>
 								</td>
-							</tr>
+							</tr>							
 							<tr>
 								<td>
 									<div class="form-floating mb-3">
-										<input class="form-control" id="enterid" type="text" placeholder="產品ID"
-											size="10%">
-										<label>產品ID</label>
+										<input class="form-control" id="enternum" type="text" placeholder="產品編號" size="10%">
+										<label>產品編號</label>
 									</div>
 								</td>
 								<td>
-									<span class="form-text"> 輸入進貨產品ID </span>
+									<span class="form-text"> 輸入進貨產品編號 </span>
 								</td>
 							</tr>
 							<tr>
@@ -123,6 +135,18 @@
 					</td>
 					<td>
 						<table class="table table-borderless">
+							<tr>
+								<td>
+									<div class="form-floating mb-3">
+									<input class="form-control" id="types" type="text" ng-model="form.types"
+											placeholder="產品編號" size="10%">
+									<label>產品類型</label>
+									</div>
+								</td>
+								<td>
+									<span class="form-text"> 新增、修改 </span>
+								</td>
+							</tr>
 							<tr>
 								<td>
 									<div class="form-floating mb-3">
@@ -174,12 +198,23 @@
 							<tr>
 								<td>
 									<div class="form-floating mb-3">
-										<input class="form-control" id="day" type="date" ng-model="form.day"
+										<input class="form-control" id="day" type="Date" ng-model="form.day"
 											placeholder="日期" size="10%" />
 										<label>日期</label>
 									</div>
 								</td>
 								<td>
+									<span class="form-text"> 新增、修改 </span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="md-form">
+										<label>產品規格</label>
+										<textarea id="area" class="md-textarea form-control" rows="3" ng-model="form.text" size="10%"></textarea>
+									</div>
+								</td>
+								<td><br>
 									<span class="form-text"> 新增、修改 </span>
 								</td>
 							</tr>

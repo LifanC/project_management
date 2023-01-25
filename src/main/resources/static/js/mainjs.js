@@ -6,6 +6,7 @@ app.controller('myCtrl', function($scope, $interval, $http) {
 	}, 1000);
 	$scope.names = [];
 	$scope.form = {
+		types:"",
 		number: "",
 		name: "",
 		count: "",
@@ -15,11 +16,13 @@ app.controller('myCtrl', function($scope, $interval, $http) {
 	};
 	_refreshPageData();
 	$scope.edit = function(x) {
+		$scope.form.types = x.types;
 		$scope.form.number = x.number;
 		$scope.form.name = x.name;
 		$scope.form.count = x.count;
 		$scope.form.price = x.price;
 		$scope.form.day = x.day;
+		$scope.form.text = x.text;
 		$scope.form.daytime = x.daytime;
 	};
 	$scope.del = function(x) {
@@ -35,7 +38,7 @@ app.controller('myCtrl', function($scope, $interval, $http) {
 		let price = x.price;
 		let day = x.day;
 		if (number != "" && name != "" && count != "" && price != "" && day != "") {
-			$.post("delete", { number: number, name: name, count: count, price: price, day: day  });
+			$.post("delete", { number: number, name: name, count: count, price: price, day: day });
 		}
 		setTimeout(() => {
 			document.location.reload();
@@ -53,13 +56,15 @@ app.controller('myCtrl', function($scope, $interval, $http) {
 	}
 
 	$scope.btn = () => {
+		let types = $("#types").val();
 		let number = $("#number").val();
 		let name = $("#name").val();
 		let count = $("#count").val();
 		let price = $("#price").val();
 		let day = $("#day").val();
-		if (number != "" && name != "" && count != "" && price != "" && day != "") {
-			$.post("projectadd", { number: number, name: name, count: count, price: price, day: day, daytime: $scope.thedaytime });
+		let textarea = $("#area").val();
+		if (types != "" && number != "" && name != "" && count != "" && price != "" && day != "" && textarea != "") {
+			$.post("projectadd", { types:types ,number: number, name: name, count: count, price: price, day: day, text: textarea, daytime: $scope.thedaytime });
 		}
 		setTimeout(() => {
 			document.location.reload();
@@ -67,38 +72,42 @@ app.controller('myCtrl', function($scope, $interval, $http) {
 	}
 
 	$scope.myClickset = () => {
-		let setid = $("#setid").val();
+		let setnum = $("#setnum").val();
 		let setcount = $("#setcount").val();
-		if (setid != "" && setcount != "") {
-			$.post("set", { count: setcount, id: setid });
+		if (setnum != "" && setcount != "") {
+			$.post("set", { count: setcount, number: setnum });
 		}
 		setTimeout(() => {
 			document.location.reload();
 		}, 500);
-		
+
 	}
-	
+
 	$scope.myClickenter = () => {
-		let enterid = $("#enterid").val();
+		let enternum = $("#enternum").val();
 		let entercount = $("#entercount").val();
-		if (enterid != "" && entercount != "") {
-			$.post("enter", { count: entercount, id: enterid });
+		if (enternum != "" && entercount != "") {
+			$.post("enter", { count: entercount, number: enternum });
 		}
 		setTimeout(() => {
 			document.location.reload();
 		}, 500);
-		
+
 	}
-	
-	
+
+	$scope.orderByMe = function(x) {
+		$scope.myOrderBy = x;
+	}
+
+
 });
 
-$(document).ready(function () {
-var time = new Date();
-var day = ("0" + time.getDate()).slice(-2);
-var month = ("0" + (time.getMonth() + 1)).slice(-2);
-var today = time.getFullYear() + "-" + (month) + "-" + (day);
-$('#day').val(today);
+$(document).ready(function() {
+	var time = new Date();
+	var day = ("0" + time.getDate()).slice(-2);
+	var month = ("0" + (time.getMonth() + 1)).slice(-2);
+	var today = time.getFullYear() + "-" + (month) + "-" + (day);
+	$('#day').val(today);
 })
 
 

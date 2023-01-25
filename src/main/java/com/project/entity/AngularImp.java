@@ -8,16 +8,18 @@ public class AngularImp{
 	public void updateProjectData(Project project) throws SQLException {
 		    PreparedStatement updateProductid = null;
 		    PreparedStatement updateQuantity = null;
-		    String updateString = "update product_object.project set product_object.project.name = ?, product_object.project.count = ?, product_object.project.price = ?, product_object.project.day = ?, product_object.project.daytime = ? where id = ?";
+		    String updateString = "update product_object.project set product_object.project.types = ?, product_object.project.name = ?, product_object.project.count = ?, product_object.project.price = ?, product_object.project.day = ?, product_object.project.text = ?, product_object.project.daytime = ? where id = ?";
 		    try {		      
 		    	conn.setAutoCommit(false);
 		        updateProductid = conn.prepareStatement(updateString);
-		            updateProductid.setString(1, project.getName());
-		            updateProductid.setInt(2, project.getCount());
-		            updateProductid.setInt(3, project.getPrice());
-		            updateProductid.setString(4, project.getDay());
-		            updateProductid.setString(5, project.getDaytime());
-		            updateProductid.setInt(6, project.getId());
+		        	updateProductid.setString(1, project.getTypes());
+		            updateProductid.setString(2, project.getName());
+		            updateProductid.setInt(3, project.getCount());
+		            updateProductid.setInt(4, project.getPrice());
+		            updateProductid.setString(5, project.getDay());
+		            updateProductid.setString(6, project.getText());
+		            updateProductid.setString(7, project.getDaytime());
+		            updateProductid.setInt(8, project.getId());
 		            updateProductid.executeUpdate();
 		        
 		    } catch (Exception e ) {
@@ -46,12 +48,12 @@ public class AngularImp{
 	public void updateCount(Project project) throws SQLException {
 	    PreparedStatement updateProductid = null;
 	    PreparedStatement updateQuantity = null;
-	    String updateString = "update product_object.project set product_object.project.count = ? where id = ?";
+	    String updateString = "update product_object.project set product_object.project.count = ? where number = ?";
 	    try {		      
 	    	conn.setAutoCommit(false);
 	        updateProductid = conn.prepareStatement(updateString);
 	            updateProductid.setInt(1, project.getCount());
-	            updateProductid.setInt(2, project.getId());
+	            updateProductid.setString(2, project.getNumber());
 	            updateProductid.executeUpdate();
 	        
 	    } catch (Exception e ) {
